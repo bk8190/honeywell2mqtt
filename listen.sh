@@ -8,11 +8,11 @@
 set -x
 
 export LANG=C
-PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
 # Start the listener and enter an endless loop
 echo "Starting RTL..."
-/usr/local/bin/rtl_433 -f 345000000 -F json -R 70 | while read line
+rtl_433 -f 345000000 -F json -R 70 | while read line
 do
   node /app/send.js -p "$line"
 done

@@ -31,7 +31,7 @@ LABEL Description="This image will monitor for Honeywell Sensors message at 345.
 #    apk del build-deps && \
 #    rm -r /tmp/src && \
 #    apk add --no-cache libusb mosquitto-clients rtl-sdr
-RUN apk add --no-cache libusb mosquitto-clients rtl-sdr
+RUN apk add --no-cache libusb mosquitto-clients rtl-sdr rtl_433
 WORKDIR /app
 
 COPY package*.json ./
