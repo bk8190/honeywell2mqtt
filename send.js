@@ -24,12 +24,13 @@ client.on('connect', function () {
   if(jsonNameMap.hasOwnProperty(packet.id)){
     fName = jsonNameMap[packet.id]
   }
+  let prefix = 'honeywell2mqtt_'
 
   // Set base topic
-  let baseTopic = `${discoveryPrefix}/binary_sensor/${packet.id}`
+  let baseTopic = `${discoveryPrefix}/binary_sensor/${prefix}${packet.id}`
 
   // Send the discovery message
-  let configPayload = `{"name": "${fName}", "uniq_id": "${packet.id}", "stat_t": "${baseTopic}/state", "qos": 1, "pl_on": "open", "pl_off": "closed", "dev_cla": "opening"}`
+  let configPayload = `{"name": "${fName}", "uniq_id": "${prefix}${packet.id}", "stat_t": "${baseTopic}/state", "json_attr_t": "${baseTopic}/attributes", "qos": 1, "pl_on": "open", "pl_off": "closed", "dev_cla": "opening"}`
   client.publish(`${baseTopic}/config`, configPayload, {qos: 1, retain: true})
 
   console.log(`T: ${baseTopic}/config`)
@@ -38,5 +39,6 @@ client.on('connect', function () {
   client.publish(`${baseTopic}/state`, packet.state, {qos: 1, retain: true})
   console.log(`T: ${baseTopic}/state`)
   console.log(`P: ${packet.state}`)
+  client.publish(`${baseTopic}/attributes`, program.packet, {qos: 1, retain: true})
   client.end()
 })
