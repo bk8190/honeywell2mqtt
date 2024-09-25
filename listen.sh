@@ -12,7 +12,10 @@ PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 
 # Start the listener and enter an endless loop
 echo "Starting RTL..."
-rtl_433 -f 345000000 -F json -R 70 | while read line
+#rtl_433 -f 345000000 -F json -R 70 | while read line
+rtl_433 -f 345000000 -F json -R 70 -M level -M noise -g 49.5 | while read line
+
+
 do
   node /app/send.js -p "$line"
 done
